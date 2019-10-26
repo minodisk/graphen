@@ -71,6 +71,7 @@ export const App = () => {
           },
         }}
       />
+      <Controller />
       <section
         css={{
           display: "flex",
@@ -78,7 +79,6 @@ export const App = () => {
       >
         <Editor code={code} error={error} onChange={setCode} />
         <Viewer svg={svg} />
-        <Controller />
       </section>
     </Fragment>
   );

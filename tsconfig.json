@@ -9,6 +9,7 @@
     "alwaysStrict": true,
     "sourceMap": true,
     "noImplicitAny": true,
+    "allowSyntheticDefaultImports": true,
     "module": "esnext",
     "moduleResolution": "node",
     "jsx": "react"

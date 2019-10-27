@@ -6,6 +6,28 @@ export interface Error {
 
 const rSyntaxError = /error in line (\d+)/;
 
+export type Engine = "circo" | "dot" | "fdp" | "neato" | "osage" | "twopi";
+export type Format =
+  | "svg"
+  | "dot"
+  | "xdot"
+  | "plain"
+  | "plain-ext"
+  | "ps"
+  | "ps2"
+  | "json"
+  | "json0";
+
+export interface Options {
+  format: Format;
+  scale: number;
+  engine: Engine;
+  files: Array<string>;
+  images: Array<string>;
+  yInvert: boolean;
+  nop: number;
+}
+
 export class Viz {
   worker!: Worker;
   codes: Array<string> = [];
@@ -51,7 +73,7 @@ export class Viz {
     resolve(result);
   };
 
-  render(code: string): Promise<string> {
+  render(code: string, options: Partial<Options> = {}): Promise<string> {
     this.codes.push(code);
     return new Promise((resolve, reject) => {
       const id = this.promises.length;
@@ -67,6 +89,7 @@ export class Viz {
           images: [],
           yInvert: false,
           nop: 0,
+          ...options,
         },
       });
     });

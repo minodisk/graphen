@@ -1,7 +1,8 @@
 /** @jsx jsx */
 import { jsx, Global } from "@emotion/core";
 import { useState, useEffect, Fragment } from "react";
-import { Viz, Error } from "./Viz";
+import { useParams } from "react-router";
+import { Viz, Engine, Format, Error } from "./Viz";
 import { Editor } from "./Editor";
 import { Viewer } from "./Viewer";
 import { Controller } from "./Controller";
@@ -18,40 +19,33 @@ const useDebounce = (fn: () => any, ms: number = 0, deps: Array<any> = []) => {
 const viz = new Viz();
 
 export const App = () => {
-  const [code, setCode] = useState(`digraph G {
+  const params = { engine: "dot", code: "foo", ...useParams() };
+  const format: Format = "svg";
 
-	subgraph cluster_0 {
-		style=filled;
-		color=lightgrey;
-		node [style=filled,color=white];
-		a0 -> a1 -> a2 -> a3;
-		label = "process #1";
-	}
-
-	subgraph cluster_1 {
-		node [style=filled];
-		b0 -> b1 -> b2 -> b3;
-		label = "process #2";
-		color=blue
-	}
-	start -> a0;
-	start -> b0;
-	a1 -> b3;
-	b2 -> a3;
-	a3 -> a0;
-	a3 -> end;
-	b3 -> end;
-
-	start [shape=Mdiamond];
-	end [shape=Msquare];
-}`);
+  const paramCode = decodeURIComponent(params.code);
+  const [code, setCode] = useState(paramCode);
   const [svg, setSvg] = useState("");
   const [error, setError] = useState<Error>();
 
   useDebounce(
     async () => {
       try {
-        const s = await viz.render(code);
+        console.log("Compiling.......");
+        if (
+          ["circo", "dot", "fdp", "neato", "osage", "twopi"].indexOf(
+            params.engine,
+          ) === -1
+        ) {
+          throw {
+            row: 0,
+            column: 0,
+            text: "bad format",
+          };
+        }
+        const s = await viz.render(code, {
+          engine: params.engine as Engine,
+          format,
+        });
         setError(undefined);
         setSvg(s);
       } catch (err) {
@@ -69,15 +63,32 @@ export const App = () => {
           body: {
             margin: 0,
           },
+          "#app": {
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+          },
         }}
       />
       <Controller />
       <section
         css={{
           display: "flex",
+          height: "100%",
         }}
       >
-        <Editor code={code} error={error} onChange={setCode} />
+        <Editor
+          code={code}
+          error={error}
+          onChange={code => {
+            setCode(code);
+            // history.pushState(
+            //   null,
+            //   "",
+            //   `/engines/${"dot"}/codes/${encodeURIComponent(code)}`,
+            // );
+          }}
+        />
         <Viewer svg={svg} />
       </section>
     </Fragment>

@@ -26,5 +26,11 @@ module.exports = {
     ],
     compress: true,
     port: 8000,
+    historyApiFallback: {
+      rewrites: [
+        { from: /^\/$/, to: "/index.html" },
+        { from: /^\/g/, to: "/index.html" },
+      ],
+    },
   },
 };

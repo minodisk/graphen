@@ -45,7 +45,7 @@ export class Viz {
       this.worker.removeEventListener("message", this.onMessage);
       this.worker.terminate();
     }
-    this.worker = new Worker("/full.render.js");
+    this.worker = new Worker("/assets/scripts/full.render.js");
     this.worker.addEventListener("message", this.onMessage);
   }
 

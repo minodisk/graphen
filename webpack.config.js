@@ -4,8 +4,9 @@ module.exports = {
   mode: "development",
   entry: "./src/index.tsx",
   output: {
-    path: path.join(__dirname, "./dist"),
-    filename: "bundle.js",
+    path: path.join(__dirname, "public/assets/scripts"),
+    filename: "index.js",
+    publicPath: "/assets/scripts/",
   },
   module: {
     rules: [
@@ -19,18 +20,11 @@ module.exports = {
     extensions: [".js", ".jsx", ".ts", ".tsx"],
   },
   devServer: {
-    contentBase: [
-      path.join(__dirname, "dist"),
-      path.join(__dirname, "static"),
-      path.join(__dirname, "node_modules/viz.js"),
-    ],
+    contentBase: [path.join(__dirname, "public")],
     compress: true,
     port: 8000,
     historyApiFallback: {
-      rewrites: [
-        { from: /^\/$/, to: "/index.html" },
-        { from: /^\/g/, to: "/index.html" },
-      ],
+      rewrites: [{ from: /^\/(?!assets\/)/, to: "/index.html" }],
     },
   },
 };

@@ -1,8 +1,29 @@
-import * as functions from 'firebase-functions';
+import * as functions from "firebase-functions";
 
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
-//
-// export const helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
+export const createGraph = functions.https.onRequest((req, res) => {
+  console.log("read:", req.body);
+  res.json({
+    id: "xxx",
+    code: "digraph {a -> b}",
+  });
+});
+
+export const readGraph = functions.https.onRequest((req, res) => {
+  console.log("read:", req.body);
+  res.json({
+    id: "xxx",
+    code: "digraph {a -> b}",
+  });
+});
+
+export const updateGraph = functions.https.onRequest((req, res) => {
+  console.log("update:", req.body);
+  res.json({
+    id: "xxx",
+  });
+});
+
+export const deleteGraph = functions.https.onRequest((req, res) => {
+  console.log("delete:", req.body);
+  res.send();
+});

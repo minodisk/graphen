@@ -1,19 +1,19 @@
 {
   "name": "graphen",
   "version": "0.0.0",
-  "description": "A web service serves graph image written in Graphviz",
-  "main": "dist/index.js",
+  "description": "A web service serves graph images rendered by Graphviz",
+  "main": "index.js",
   "scripts": {
-    "build": "webpack",
-    "start": "webpack-dev-server",
-    "test": "jest"
+    "build": "cd hosting build && npm run build && cd -",
+    "deploy": "firebase deploy"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/minodisk/graphen.git"
   },
   "keywords": [
-    "Graphviz"
+    "graphviz",
+    "graph"
   ],
   "author": "Daisuke Mino",
   "license": "Apache-2.0",
@@ -21,29 +21,8 @@
     "url": "https://github.com/minodisk/graphen/issues"
   },
   "homepage": "https://github.com/minodisk/graphen#readme",
-  "dependencies": {
-    "@emotion/core": "^10.0.22",
-    "@material-ui/core": "^4.5.1",
-    "@material-ui/icons": "^4.5.1",
-    "@material-ui/lab": "^4.0.0-alpha.29",
-    "react": "^16.10.2",
-    "react-ace": "^8.0.0",
-    "react-dom": "^16.10.2",
-    "react-router": "^5.1.2",
-    "react-router-dom": "^5.1.2",
-    "react-use": "^12.7.1",
-    "viz.js": "^2.1.2"
-  },
   "devDependencies": {
-    "@types/react": "^16.9.9",
-    "@types/react-dom": "^16.9.2",
-    "@types/react-router": "^5.1.2",
-    "@types/react-router-dom": "^5.1.0",
-    "firebase-tools": "^7.6.1",
-    "ts-loader": "^6.2.1",
-    "typescript": "^3.6.4",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.9",
-    "webpack-dev-server": "^3.9.0"
-  }
+    "firebase-tools": "^7.6.2"
+  },
+  "private": true
 }

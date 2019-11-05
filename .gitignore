@@ -60,7 +60,8 @@ typings/
 # next.js build output
 .next
 
-public/*
-!public/index.html
-!public/index.old.html
-!public/assets/scripts/full.render.js
+# Firebase
+.firebase
+
+# Distribution files
+hosting/public/assets/scripts/index.js

@@ -71,7 +71,7 @@ export const Authentication = () => {
   const theme = useTheme();
 
   useEffect(() => {
-    const unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
+    const unregisterAuthObserver = auth.onAuthStateChanged(user => {
       console.log("onAuthStateChanged:", user);
       setUser(user);
     });

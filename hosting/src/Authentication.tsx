@@ -19,6 +19,13 @@ import TwitterIcon from "@material-ui/icons/Twitter";
 import { useTheme } from "@material-ui/core/styles";
 import { Google as GoogleIcon } from "./Google";
 
+type CredentialError = {
+  code: "auth/account-exists-with-different-credential";
+  credential: firebase.auth.AuthCredential;
+  email: string;
+  message: string;
+};
+
 const app = firebase.initializeApp({
   apiKey: "AIzaSyDXfx6vYZP7muzM1c3CNAcKSffGsjj_E4Q",
   authDomain: "graphen-ea3be.firebaseapp.com",
@@ -29,17 +36,6 @@ const app = firebase.initializeApp({
   // appId: "1:426713470051:web:245763bef2bb6a8e985456",
   // measurementId: "G-JBW4DSSESD",
 });
-// const uiConfig = {
-//   signInFlow: "popup",
-//   // signInSuccessUrl: "/signedIn",
-//   signInOptions: [
-//     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-//     firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-//   ],
-//   callbacks: {
-//     signInSuccessWithAuthResult: () => false,
-//   },
-// };
 const auth = app.auth();
 const providers = [
   {
@@ -145,6 +141,33 @@ export const Authentication = () => {
                       setOpened(false);
                       setUser(user);
                     } catch (err) {
+                      if (
+                        err.code ===
+                        "auth/account-exists-with-different-credential"
+                      ) {
+                        try {
+                          const e = err as CredentialError;
+                          const providerIds = await auth.fetchSignInMethodsForEmail(
+                            e.email,
+                          );
+                          const provider = providers.find(
+                            p =>
+                              providerIds.indexOf(p.provider.providerId) !== -1,
+                          );
+                          if (provider) {
+                            const { user } = await auth.signInWithPopup(
+                              provider.provider,
+                            );
+                            if (user) {
+                              await user.linkAndRetrieveDataWithCredential(
+                                e.credential,
+                              );
+                            }
+                          }
+                        } catch (err) {
+                          console.log("fail to signInWithCredential:", err);
+                        }
+                      }
                       setError(err);
                     }
                   }}

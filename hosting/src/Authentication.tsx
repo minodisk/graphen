@@ -135,7 +135,6 @@ export const Authentication = () => {
                   button
                   onClick={async () => {
                     try {
-                      console.log("login");
                       setError(null);
                       const { user } = await auth.signInWithPopup(provider);
                       setOpened(false);

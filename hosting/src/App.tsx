@@ -102,7 +102,23 @@ export const App = () => {
           },
         }}
       />
-      <Controller />
+      <Controller
+        onAdd={async () => {
+          await fetch("/api/graphs", {
+            method: "POST",
+            mode: "cors",
+            cache: "no-cache",
+            credentials: "same-origin",
+            headers: {
+              "Content-Type": "application/json; charset=utf-8",
+            },
+            redirect: "follow",
+            referrer: "no-referrer",
+            body: JSON.stringify({}),
+          });
+        }}
+        onSave={() => {}}
+      />
       <section
         css={{
           display: "flex",

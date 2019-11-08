@@ -7,9 +7,12 @@ import CodeIcon from "@material-ui/icons/Code";
 import SaveIcon from "@material-ui/icons/SaveAltOutlined";
 import { Authentication } from "./Authentication";
 
-export type Props = {};
+export type Props = {
+  onAdd: () => void;
+  onSave: () => void;
+};
 
-export const Controller = ({  }: Props) => (
+export const Controller = ({ onAdd, onSave }: Props) => (
   <AppBar position="relative">
     <Toolbar
       css={{
@@ -19,10 +22,10 @@ export const Controller = ({  }: Props) => (
     >
       <Typography variant="h6">Graphen</Typography>
       <div>
-        <IconButton color="inherit">
+        <IconButton color="inherit" onClick={onAdd}>
           <AddIcon />
         </IconButton>
-        <IconButton color="inherit">
+        <IconButton color="inherit" onClick={onSave}>
           <SaveIcon />
         </IconButton>
         <IconButton color="inherit">

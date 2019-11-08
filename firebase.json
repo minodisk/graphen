@@ -18,20 +18,8 @@
         "destination": "/index.html"
       },
       {
-        "source": "/api/createGraph",
-        "function": "createGraph"
-      },
-      {
-        "source": "/api/readGraph",
-        "function": "readGraph"
-      },
-      {
-        "source": "/api/updateGraph",
-        "function": "updateGraph"
-      },
-      {
-        "source": "/api/deleteGraph",
-        "function": "deleteGraph"
+        "source": "/api/**",
+        "function": "api"
       }
     ]
   },
